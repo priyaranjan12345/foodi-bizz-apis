@@ -1,6 +1,6 @@
 from datetime import datetime
-from pydantic import BaseModel, HttpUrl
-from typing import List
+from pydantic import BaseModel, HttpUrl, Field
+from typing import List, Union
 
 class Image(BaseModel):
     url: HttpUrl
@@ -35,7 +35,9 @@ class ShowItem(BaseModel):
 class OrderModel(BaseModel):
     id: int
     billingDate: datetime
-    invNum: str
+    invNum: Union[str, None] = Field(
+        default=None, title="invoice number is required", max_length=300, min_length=10
+    )
     noOfItems: int
     discount: float
     gst: float
